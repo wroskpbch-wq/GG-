@@ -1,0 +1,20 @@
+local Players = game:GetService("Players")
+ CharacterAutoLoads  false
+Players.CharacterAutoLoads = false
+Players.PlayerAdded:Connect(function(player)
+	while true do
+		local char = player.CharacterAdded:Wait()
+		char.Humanoid.Died:Connect(function()
+			char:Destroy()
+		end)
+	end
+end)
+while true do
+	local players = Players:GetChildren()
+	for _, player in pairs(players) do
+		if not workspace:FindFirstChild(player.Name) then
+			player:LoadCharacterAsync()
+		end
+	end
+	task.wait(10)
+end
